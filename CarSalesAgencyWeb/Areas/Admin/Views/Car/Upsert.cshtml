@@ -1,0 +1,107 @@
+﻿@model CarSalesAgency.Models.ViewModels.CarVm
+
+<form method="post" asp-action="Upsert" enctype="multipart/form-data">
+    <input asp-for="Car.Id" hidden/>
+    <input asp-for="Car.ImgUrl" hidden/>
+
+    <div class="row">
+        <div class="col-10">
+            <div class="border p-3 mt-4 row">
+                <div class="col-12 pb-2">
+                    <h2 class="text-primary">@(Model.Car.Id!=0?"Update": "Create") Car</h2>
+                    <hr />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Car.Name"></label>
+                    <input  asp-for="Car.Name" class="form-control"/>
+                    <span asp-validation-for="Car.Name" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Car.PlacesNumber"></label>
+                    <input  asp-for="Car.PlacesNumber" class="form-control"/>
+                    <span asp-validation-for="Car.PlacesNumber" class="text-danger"></span>
+                </div>
+                <div class="mb-3 col-6">
+                    <label asp-for="Car.Color"></label>
+                    <input  asp-for="Car.Color" class="form-control"/>
+                    <span asp-validation-for="Car.Color" class="text-danger"></span>
+                </div>
+                <div class="mb-3 col-6">
+                    <label asp-for="Car.Model"></label>
+                    <input  asp-for="Car.Model" class="form-control"/>
+                    <span asp-validation-for="Car.Model" class="text-danger"></span>
+                </div>
+                <div class="mb-3 col-6">
+                    <label asp-for="Car.Type"></label>
+                    <input  asp-for="Car.Type" class="form-control"/>
+                    <span asp-validation-for="Car.Type" class="text-danger"></span>
+                </div>
+                <div class="mb-3 col-6">
+                    <label asp-for="Car.Price"></label>
+                    <input  asp-for="Car.Price" class="form-control"/>
+                    <span asp-validation-for="Car.Price" class="text-danger"></span>
+                </div>               
+                <div class="mb-3">
+                    <label asp-for="Car.ImgUrl"></label>
+                    <input id="UploadBox" type="file" name="file" class="form-control"/>
+                </div>
+                <div class="mb-3 col-6">
+                    <label asp-for="Car.BrandId"></label>
+                    <select asp-for="Car.BrandId" asp-items="@Model.BrandList" class="form-select">
+                        <option disabled selected>==Select Brand==</option>
+                    </select>
+                    <span asp-validation-for="Car.BrandId" class="text-danger"></span>
+                </div>
+
+                <div class="col-12">
+                    @if (Model.Car.Id != 0)
+                    {
+                        <button type="submit" class="btn btn-primary" style="width:150px" >Update</button>
+                    }
+                    else
+                    {
+                        <button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width:150px">Create</button>
+                    }
+                    <a asp-controller="Car" asp-action="Index" class="btn btn-secondary" style="width:150px">
+                        Back to list
+                    </a>
+                </div>
+        
+            </div>
+        </div>
+        <div class="col-2 mt-4">
+            <img src="@Model.Car.ImgUrl"
+                style="width: 100%;border-radius:5px;border:1px solid #bbb9b9"/>
+        </div>
+    </div>
+
+</form>
+
+@section Scripts{
+    @{
+    <partial name="_ValidationScriptsPartial"/>
+    }
+    <script>
+        function ValidateInput(){
+            if (document.getElementById("UploadBox").value == "") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Pleas upload an Image!',
+                });
+                return false;
+            }
+            return true;
+        }
+    </script>
+    <script>
+    tinymce.init({
+      selector: 'textarea',
+      plugins: 'a11ychecker advcode casechange export formatpainter image editimage linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tableofcontents tinycomments tinymcespellchecker',
+      toolbar: 'a11ycheck addcomment showcomments casechange checklist code export formatpainter image editimage pageembed permanentpen table tableofcontents',
+      toolbar_mode: 'floating',
+      tinycomments_mode: 'embedded',
+      tinycomments_author: 'Author name',
+    });
+  </script>
+}

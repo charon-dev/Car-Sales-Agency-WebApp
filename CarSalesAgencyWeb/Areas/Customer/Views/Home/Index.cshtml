@@ -1,0 +1,30 @@
+﻿@model IEnumerable<CarSalesAgency.Models.Car>
+
+<div class="row pb-3">
+    @foreach(var car in Model)
+    {
+        <div class="col-lg-3 col-md-6"> @*In a large screen we will see 4 products/ small screen 2 products*@
+            <div class="row p-2" >
+                <div class="col-12 p-1" style="border:1px solid #088cba;border-radius:5px;">
+                    <div class="card" style="height:450px;overflow:hidden">
+                        <img style="height:300px;overflow:hidden" src="@car.ImgUrl" class="card-img-top rounded"/>
+                        <div class="card-body">
+                            <div class="pl-1">
+                                <p class="card-title h5 text-primary">@car.Name</p>
+                                <p class="card-title text-info">by <b>@car.Brand.Name</b></p>
+                            </div>
+                            <div class="pl-1">
+                                <p>Price:<b>$@car.Price.ToString("c")</b></p>
+                            </div>
+                        </div>                       
+                    </div>
+                    <div>
+                        <a asp-action="Details" class="btn btn-primary form-control" asp-route-CarId="@car.Id">
+                            Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
